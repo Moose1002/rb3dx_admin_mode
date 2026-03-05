@@ -4,87 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>window.$ = window.jQuery = require('jquery');</script>
+    <!-- Required script for xbox.js -->
     <script src="./file-process.js"></script>
     <script src="./node_modules/chosen-js/chosen.jquery.min.js"></script>
+    <script src="./xbox.js"></script>
     <link rel="stylesheet" href="./node_modules/chosen-js/chosen.min.css">
+    <link rel="stylesheet" href="./index.css">
     <title>RB3DX Admin Panel</title>
 </head>
 <body>
-    <h1>RB3DX Admin Panel</h1>
     <div id="set-platform">
-        <h2>Select Platform</h2>
-        <button onclick="setPlatform('xbox')">Xbox 360</button>
-        <button onclick="setPlatform('rpcs3')">RPCS3</button>
+        <span class="title" style="transform: translate(-50%, -33px); text-align: center">Select Platform</span>
+        <input type="image" src="resources/xbox360-logo.png" onclick="setPlatform('xbox')" alt="xbox360" style="z-index: 1">
+        <input type="image" src="resources/rpc3-logo.png" onclick="setPlatform('rpcs3')" alt="rpcs3" style="z-index: 1">
     </div>
-
-    <div id="select-ace" style="display: none;">
-        <p>Select ace_admin.dta</p>
-        <input type="file" id="upload-ace"></button>
-    </div>
-
-    <div id="ace_uploaded" style="display: none;">
-        <div style="margin-bottom: 10px;">
-            <h3 id="song-count" style="margin: 0px; margin-bottom: 10px;"></h3>
-            <button style="display: inline-block;" id="pullSongs" onclick="FetchSongList()">Pull Songs</button>
-            <p style="display: inline-block;" id="uploadCSV"></p>
-            <input type="file" style="display: inline-block;" id="upload"></input>
+    <nav id="nav">
+        <button onclick="console.log(store.get('platform'))">General</button>
+        <button>Audio</button>
+        <button>Audio</button>
+        <button>Audio</button>
+        <span class="title">RB3DX Admin Panel</span>
+        <label id="set-xbox-ip">Xbox IP:
+            <input type="text" id="xbox-ip" minlength="7" maxlength="15" size="15" pattern="^(?>(\d|[1-9]\d{2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?1)$" title="Please enter a valid ipv4 address." required>
+        </label>
+    </nav>
+    <main id="content">
+        <h2 id="ip-warning" style="text-align: center; display: none;"><u>Please enter your Xbox360 console IP address in the top right.</u></h2>
+        <div id="select-ace" style="display: none;">
+            <p>Select ace_admin.dta</p>
+            <input type="file" id="upload-ace"></button>
         </div>
-        <div>
-            <label for="song_list">Choose a song:</label>
-            <select style="max-width: 500px;" name="song_list" id="song_list"></select>
-        </div>
-        <br>
-        <div>
-            <button id="jumpSongBtn" onclick="jumpSong()" style="display: none;">Jump to Song</button>
-            <button onclick="logSong()">Play Song</button>
-            <button onclick="sendCommand('{ui goto_screen song_select_enter_screen}')">Song Library</button>
-        </div>
-        <br>
-        <div>
-            <button onclick="sendCommand('{overshell attempt_to_add_user {user_mgr get_user_from_pad_num 0}}')">Drop in player 1</button>
-            <button onclick="sendCommand('{overshell attempt_to_add_user {user_mgr get_user_from_pad_num 1}}')">Drop in player 2</button>
-            <button onclick="sendCommand('{overshell attempt_to_add_user {user_mgr get_user_from_pad_num 2}}')">Drop in player 3</button>
-            <button onclick="sendCommand('{overshell attempt_to_add_user {user_mgr get_user_from_pad_num 3}}')">Drop in player 4</button>
-        </div>
-        <br>
-        <div>
-            <button onclick="sendCommand('{if {user_mgr get_user_from_slot 0} {{overshell get_slot {user_mgr get_user_from_slot 0}} remove_user}}')">Drop out slot 1</button>
-            <button onclick="sendCommand('{if {user_mgr get_user_from_slot 1} {{overshell get_slot {user_mgr get_user_from_slot 1}} remove_user}}')">Drop out slot 2</button>
-            <button onclick="sendCommand('{if {user_mgr get_user_from_slot 2} {{overshell get_slot {user_mgr get_user_from_slot 2}} remove_user}}')">Drop out slot 3</button>
-            <button onclick="sendCommand('{if {user_mgr get_user_from_slot 3} {{overshell get_slot {user_mgr get_user_from_slot 3}} remove_user}}')">Drop out slot 4</button>
-        </div>
-        <br>
-        <div>
-            <button onclick="writeToMic()">Set Mic Volumes</button>
-            <select name="mic1" id="mic1">
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>            
-              </select>
-              <select name="mic2" id="mic2">
-                  <option value="0">0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                  <option value="11">11</option>            
-                </select>
-                <select name="mic3" id="mic3">
+        <div id="ace_uploaded" style="display: none;">
+            <div style="margin-bottom: 10px;">
+                <h3 id="song-count" style="margin: 0px; margin-bottom: 10px;"></h3>
+                <button style="display: inline-block;" id="pullSongs" onclick="fetchSongList()">Pull Songs</button>
+                <p style="display: inline-block;" id="uploadCSV"></p>
+                <input type="file" style="display: inline-block;" id="upload"></input>
+            </div>
+            <div>
+                <label for="song_list">Choose a song:</label>
+                <select style="max-width: 500px;" name="song_list" id="song_list"></select>
+            </div>
+            <br>
+            <div>
+                <button id="jumpSongBtn" onclick="jumpSong()" style="display: none;">Jump to Song</button>
+                <button onclick="logSong()">Play Song</button>
+                <button onclick="sendCommand('{ui goto_screen song_select_enter_screen}')">Song Library</button>
+            </div>
+            <br>
+            <div>
+                <button onclick="sendCommand('{overshell attempt_to_add_user {user_mgr get_user_from_pad_num 0}}')">Drop in player 1</button>
+                <button onclick="sendCommand('{overshell attempt_to_add_user {user_mgr get_user_from_pad_num 1}}')">Drop in player 2</button>
+                <button onclick="sendCommand('{overshell attempt_to_add_user {user_mgr get_user_from_pad_num 2}}')">Drop in player 3</button>
+                <button onclick="sendCommand('{overshell attempt_to_add_user {user_mgr get_user_from_pad_num 3}}')">Drop in player 4</button>
+            </div>
+            <br>
+            <div>
+                <button onclick="sendCommand('{if {user_mgr get_user_from_slot 0} {{overshell get_slot {user_mgr get_user_from_slot 0}} remove_user}}')">Drop out slot 1</button>
+                <button onclick="sendCommand('{if {user_mgr get_user_from_slot 1} {{overshell get_slot {user_mgr get_user_from_slot 1}} remove_user}}')">Drop out slot 2</button>
+                <button onclick="sendCommand('{if {user_mgr get_user_from_slot 2} {{overshell get_slot {user_mgr get_user_from_slot 2}} remove_user}}')">Drop out slot 3</button>
+                <button onclick="sendCommand('{if {user_mgr get_user_from_slot 3} {{overshell get_slot {user_mgr get_user_from_slot 3}} remove_user}}')">Drop out slot 4</button>
+            </div>
+            <br>
+            <div>
+                <button onclick="writeToMic()">Set Mic Volumes</button>
+                <select name="mic1" id="mic1">
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -96,21 +80,46 @@
                     <option value="8">8</option>
                     <option value="9">9</option>
                     <option value="10">10</option>
-                    <option value="11">11</option>            
+                    <option value="11">11</option>
                   </select>
-        </div>
-        <br>
-        <div id="toggleManualScript" style="display: none;">
-            <button onclick="showManualScript()" style="margin-bottom: 10px;">(ADVANCED) Manual Script</button>
-            <textarea id="manualScript" style="overflow:hidden; resize:none; display: none; width: 100%; max-width: 600px;"></textarea>
-        </div>
+                  <select name="mic2" id="mic2">
+                      <option value="0">0</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                    </select>
+                    <select name="mic3" id="mic3">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                      </select>
+            </div>
+            <br>
+            <div id="toggleManualScript" style="display: none;">
+                <button onclick="showManualScript()" style="margin-bottom: 10px;">(ADVANCED) Manual Script</button>
+                <textarea id="manualScript" style="overflow:hidden; resize:none; display: none; width: 100%; max-width: 600px;"></textarea>
+            </div>
 
-        <p id="status"></p>
-    </div>
-    <div id="set-xbox-ip" style="display: none;">
-        <p style="display: inline-block;">Xbox 360 IP:</p>
-        <input type="text" id="xbox-ip"></input>
-    </div>
+            <p id="status"></p>
+        </div>
+    </main>
     <script>
         const { ipcRenderer } = require('electron');
         var consoleMode = "";
@@ -119,9 +128,11 @@
         function setPlatform(console) {
             consoleMode = console;
             $("#set-platform").remove();
+            $("#content").css("display", "block");
             if (consoleMode == "xbox") {
                 $("#jumpSongBtn").css("display", "inline-block");
                 $("#set-xbox-ip").css("display", "block");
+                $("#ip-warning").css("display", "block")
                 $("#uploadCSV").text("or Upload CSV");
             }
             if (consoleMode == "rpcs3") {
@@ -155,26 +166,11 @@
         });
 
         $(document).ready(function() {
-            $('#xbox-ip').keydown(function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) {  // Check if Enter is pressed (without Shift)
-                    e.preventDefault(); // Prevent new line if needed
-                    xboxIP = document.getElementById("xbox-ip").value;
-                    alert("Xbox IP Set");
-                    $("#ace_uploaded").css("display", "block");
-                }
-            });
-        });
-
-        $(document).ready(function() {
             $('#manualScript').on('input', function() {
                 this.style.height = 'auto'; // Reset height to recalculate
                 this.style.height = this.scrollHeight + 'px'; // Set new height
             });
         });
-
-        function FetchSongList() {
-            fetch(`http://${xboxIP}:21070/list_songs`).then((data) => data.text().then((t) => ParseSongList(t)));
-        }
 
         function showManualScript() {
             $("#manualScript").css("display", $("#manualScript").css("display") == "block" ? "none" : "block"  ); // hide or show text box depending on current status
@@ -253,10 +249,6 @@
             sendCommand(
                 `{meta_performer reset_songs} {meta_performer set_song {symbol ${shortname}}} {gamemode set_mode qp_coop} {ui abstract_wipe} {ui goto_screen {music_library get_next_screen}}`
             )
-        }
-        function jumpSong() {
-            var shortname = (document.getElementById("song_list").value);
-            fetch(`http://${xboxIP}:21070/jump?shortname=${shortname}`);
         }
     </script>
 </body>

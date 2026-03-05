@@ -11,22 +11,29 @@
     "dependencies": {
         "chosen-js": "^1.8.7",
         "csv-parser": "^3.1.0",
+        "electron-store": "^11.0.2",
         "jquery": "^3.7.1",
         "jquery-csv": "^1.0.40"
     },
     "devDependencies": {
         "@electron/packager": "^18.3.6",
-        "electron": "^27.0.0",
+        "electron": "^27.3.11",
         "electron-builder": "^25.1.8"
     },
     "build": {
         "productName": "RB3DX Admin Panel",
         "appId": "com.linos.rb3dxadmin",
         "win": {
-            "target": ["portable"],
-            "publish" : ["github"]
+            "target": [
+                "portable"
+            ],
+            "publish": [
+                "github"
+            ]
         },
-        "linux": { "target": "AppImage"},
+        "linux": {
+            "target": "AppImage"
+        },
         "portable": {
             "artifactName": "rb3dx-admin-panel.exe"
         },

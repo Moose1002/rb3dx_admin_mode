@@ -18,6 +18,7 @@ $(document).ready(function() {
             alert("Xbox IP Set");
             $("#ace_uploaded").css("display", "block");
             $("#ip-warning").css("display", "none")
+            fetchSongList()
         }
     });
 });

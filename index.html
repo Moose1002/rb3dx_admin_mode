@@ -30,7 +30,15 @@
     </nav>
     <main id="content">
         <h2 id="ip-warning" style="text-align: center; display: none;"><u>Please enter your Xbox360 console IP address in the top right.</u></h2>
-
+        <div id="general">
+            <select name="song_list" id="song_list"></select>
+            <div id="song-list-buttons">
+                <button id="jumpSongBtn" onclick="jumpSong()" style="display: none;">Jump to Song</button>
+                <button onclick="logSong()">Play Song</button>
+                <button onclick="sendCommand('{ui goto_screen song_select_enter_screen}')">Song Library</button>
+                <button id="pause" onclick="pauseSong()">Play/Pause</button>
+            </div>
+        </div>
         <div id="select-ace" style="display: none;">
             <p>Select ace_admin.dta</p>
             <input type="file" id="upload-ace">
@@ -41,17 +49,6 @@
                 <button style="display: inline-block;" id="pullSongs" onclick="fetchSongList()">Pull Songs</button>
                 <p style="display: inline-block;" id="uploadCSV"></p>
                 <input type="file" style="display: inline-block;" id="upload"></input>
-            </div>
-            <div>
-                <label for="song_list">Choose a song:</label>
-                <select style="max-width: 500px;" name="song_list" id="song_list"></select>
-            </div>
-            <br>
-            <div>
-                <button id="jumpSongBtn" onclick="jumpSong()" style="display: none;">Jump to Song</button>
-                <button onclick="logSong()">Play Song</button>
-                <button onclick="sendCommand('{ui goto_screen song_select_enter_screen}')">Song Library</button>
-                <button id="pause" onclick="pauseSong()">Play/Pause</button>
             </div>
             <br>
             <div>
@@ -69,7 +66,6 @@
             </div>
             <br>
             <div>
-                <p>Set Mic Volumes</p>
                 <hr>
                 <label>Mic 1:<input type="range" name="mic1" id="mic1" min="0" max="11" step="1" onchange="writeToMic(this.id, this.value)"></label>
                 <label>Mic 2:<input type="range" name="mic2" id="mic2" min="0" max="11" step="1" onchange="writeToMic(this.id, this.value)"></label>

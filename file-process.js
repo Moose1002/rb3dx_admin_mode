@@ -35,7 +35,7 @@ function ParseSongList(listini) {
     });
     $("#song-count").text(`${song_list.length} songs`);
     $("#uploadCSV").remove();
-    $("#song_list").chosen();
+    $("#song_list").chosen({width: "100%"});
 }
 
 function parseCSV(file) {

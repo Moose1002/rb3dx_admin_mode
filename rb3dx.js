@@ -51,30 +51,19 @@ function sendCommand(message) {
     }
 }
 
-function writeToMic() {
-    const mic1 = document.getElementById('mic1').value
-    const mic2 = document.getElementById('mic2').value
-    const mic3 = document.getElementById('mic3').value
+function writeToMic(id, volume) {
+    //mic_num parses the last character of the slider's id - 1; volume is the value of the slider
+    let mic_num = parseInt(id[3]) - 1;
     switch (consoleMode) {
         case "rpcs3":
             sendCommand(
-                `{profile_mgr set_mic_vol 0 ${mic1}} {profile_mgr update_mic_levels 0} {profile_mgr set_mic_vol 1 ${mic2}} {profile_mgr update_mic_levels 1} {profile_mgr set_mic_vol 2 ${mic3}} {profile_mgr update_mic_levels 2}`
+                `{profile_mgr set_mic_vol ${mic_num} ${volume}} {profile_mgr update_mic_levels ${id_num}}`
             )
             break;
         case "xbox":
             sendCommand(
-                `{profile_mgr set_mic_vol 0 ${mic1}} {profile_mgr update_mic_levels 0}`
+                `{profile_mgr set_mic_vol ${mic_num} ${volume}} {profile_mgr update_mic_levels ${id_num}}`
             )
-            setTimeout(() => {
-                sendCommand(
-                    `{profile_mgr set_mic_vol 1 ${mic2}} {profile_mgr update_mic_levels 1}`
-                )
-            }, 250);
-            setTimeout(() => {
-                sendCommand(
-                    `{profile_mgr set_mic_vol 2 ${mic3}} {profile_mgr update_mic_levels 2}`
-                )
-            }, 500);
             break;
         default:
             break;

@@ -23,6 +23,14 @@ $(document).ready(function() {
     });
 });
 
+function navigate(page) {
+    console.log(page);
+    $("#general").css("display", "none")
+    $("#audio").css("display", "none")
+    $("#misc").css("display", "none")
+    $(page).css("display", "block")
+}
+
 function setPlatform(console) {
     consoleMode = console;
     $("#set-platform").remove();

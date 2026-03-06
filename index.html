@@ -19,10 +19,9 @@
         <input type="image" src="resources/rpc3-logo.png" onclick="setPlatform('rpcs3')" alt="rpcs3" style="z-index: 1">
     </div>
     <nav id="nav">
-        <button onclick="console.log(store.get('platform'))">General</button>
-        <button>Audio</button>
-        <button>Audio</button>
-        <button>Misc</button>
+        <button onclick="navigate('#general')">General</button>
+        <button onclick="navigate('#audio')">Audio</button>
+        <button onclick="navigate('#misc')">Misc</button>
         <span class="title">RB3DX Admin Panel</span>
         <label id="set-xbox-ip">Xbox IP:
             <input type="text" id="xbox-ip" minlength="7" maxlength="15" size="15" pattern="^(?>(\d|[1-9]\d{2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?1)$" title="Please enter a valid ipv4 address." required>
@@ -31,6 +30,7 @@
     <main id="content">
         <h2 id="ip-warning" style="text-align: center; display: none;"><u>Please enter your Xbox360 console IP address in the top right.</u></h2>
         <div id="general">
+            <span class="title-left" style="transform: translateY(-20px); text-align: center">General</span>
             <select name="song_list" id="song_list"></select>
             <div id="song-list-buttons">
                 <button id="jumpSongBtn" onclick="jumpSong()" style="display: none;">Jump to Song</button>
@@ -39,39 +39,28 @@
                 <button id="pause" onclick="pauseSong()">Play/Pause</button>
             </div>
         </div>
-        <div id="select-ace" style="display: none;">
-            <p>Select ace_admin.dta</p>
-            <input type="file" class="file-upload" id="upload-ace">
+        <div id="audio" style="display: none">
+            <span class="title-left" style="transform: translateY(-20px); text-align: center">Audio</span>
+            <div class="sub-content" style="width: 50%">
+                <label>Mic 1:<input type="range" name="mic1" id="mic1" min="0" max="11" step="1" onchange="writeToMic(this.id, this.value)"></label>
+                <label>Mic 2:<input type="range" name="mic2" id="mic2" min="0" max="11" step="1" onchange="writeToMic(this.id, this.value)"></label>
+                <label>Mic 3:<input type="range" name="mic3" id="mic3" min="0" max="11" step="1" onchange="writeToMic(this.id, this.value)"></label>
+            </div>
         </div>
-        <div id="ace_uploaded" style="display: none;">
+        <div id="misc" style="display: none;">
+            <span class="title-left" style="transform: translateY(-20px); text-align: center">Misc</span>
             <div style="margin-bottom: 10px;">
                 <h3 id="song-count" style="margin: 0px; margin-bottom: 10px;"></h3>
                 <button style="display: inline-block;" id="pullSongs" onclick="fetchSongList()">Pull Songs</button>
                 <p style="display: inline-block;" id="uploadCSV"></p>
                 <input type="file" class="file-upload" style="display: inline-block;" id="upload"></input>
             </div>
-            <br>
-            <div>
-                <button onclick="sendCommand('{overshell attempt_to_add_user {user_mgr get_user_from_pad_num 0}}')">Drop in player 1</button>
-                <button onclick="sendCommand('{overshell attempt_to_add_user {user_mgr get_user_from_pad_num 1}}')">Drop in player 2</button>
-                <button onclick="sendCommand('{overshell attempt_to_add_user {user_mgr get_user_from_pad_num 2}}')">Drop in player 3</button>
-                <button onclick="sendCommand('{overshell attempt_to_add_user {user_mgr get_user_from_pad_num 3}}')">Drop in player 4</button>
-            </div>
-            <br>
-            <div>
-                <button onclick="sendCommand('{if {user_mgr get_user_from_slot 0} {{overshell get_slot {user_mgr get_user_from_slot 0}} remove_user}}')">Drop out slot 1</button>
-                <button onclick="sendCommand('{if {user_mgr get_user_from_slot 1} {{overshell get_slot {user_mgr get_user_from_slot 1}} remove_user}}')">Drop out slot 2</button>
-                <button onclick="sendCommand('{if {user_mgr get_user_from_slot 2} {{overshell get_slot {user_mgr get_user_from_slot 2}} remove_user}}')">Drop out slot 3</button>
-                <button onclick="sendCommand('{if {user_mgr get_user_from_slot 3} {{overshell get_slot {user_mgr get_user_from_slot 3}} remove_user}}')">Drop out slot 4</button>
-            </div>
-            <br>
-            <div>
-                <hr>
-                <label>Mic 1:<input type="range" name="mic1" id="mic1" min="0" max="11" step="1" onchange="writeToMic(this.id, this.value)"></label>
-                <label>Mic 2:<input type="range" name="mic2" id="mic2" min="0" max="11" step="1" onchange="writeToMic(this.id, this.value)"></label>
-                <label>Mic 3:<input type="range" name="mic3" id="mic3" min="0" max="11" step="1" onchange="writeToMic(this.id, this.value)"></label>
-            </div>
-            <br>
+        </div>
+        <div id="select-ace" style="display: none;">
+            <p>Select ace_admin.dta</p>
+            <input type="file" class="file-upload" id="upload-ace">
+        </div>
+        <div id="ace_uploaded" style="display: none;">
             <div id="toggleManualScript" style="display: none;">
                 <button onclick="showManualScript()" style="margin-bottom: 10px;">(ADVANCED) Manual Script</button>
                 <textarea id="manualScript" style="overflow:hidden; resize:none; display: none; width: 100%; max-width: 600px;"></textarea>
@@ -80,6 +69,22 @@
             <p id="status"></p>
         </div>
     </main>
+    <footer>
+        <span class="title-left" style="transform: translateY(-20px); text-align: center">Drop In/Out</span>
+        <div style="display: flex; justify-content: space-evenly">
+            <button onclick="sendCommand('{overshell attempt_to_add_user {user_mgr get_user_from_pad_num 0}}')">Drop in player 1</button>
+            <button onclick="sendCommand('{overshell attempt_to_add_user {user_mgr get_user_from_pad_num 1}}')">Drop in player 2</button>
+            <button onclick="sendCommand('{overshell attempt_to_add_user {user_mgr get_user_from_pad_num 2}}')">Drop in player 3</button>
+            <button onclick="sendCommand('{overshell attempt_to_add_user {user_mgr get_user_from_pad_num 3}}')">Drop in player 4</button>
+        </div>
+        <br>
+        <div style="display: flex; justify-content: space-evenly">
+            <button onclick="sendCommand('{if {user_mgr get_user_from_slot 0} {{overshell get_slot {user_mgr get_user_from_slot 0}} remove_user}}')">Drop out slot 1</button>
+            <button onclick="sendCommand('{if {user_mgr get_user_from_slot 1} {{overshell get_slot {user_mgr get_user_from_slot 1}} remove_user}}')">Drop out slot 2</button>
+            <button onclick="sendCommand('{if {user_mgr get_user_from_slot 2} {{overshell get_slot {user_mgr get_user_from_slot 2}} remove_user}}')">Drop out slot 3</button>
+            <button onclick="sendCommand('{if {user_mgr get_user_from_slot 3} {{overshell get_slot {user_mgr get_user_from_slot 3}} remove_user}}')">Drop out slot 4</button>
+        </div>
+    </footer>
     <script>
         const { ipcRenderer } = require('electron');
 

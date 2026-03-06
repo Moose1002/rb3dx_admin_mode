@@ -102,6 +102,34 @@
     margin-left: 8px;
 }
 
+.title-left {
+    justify-self: center;
+    margin-left: auto;
+    z-index: 0;
+    font-family: sans-serif;
+    color: rgb(217, 217, 217);
+    background: rgb(22, 22, 22);
+    padding: 0 10px;
+    position: absolute;
+    left: 3%;
+}
+
+.title-left::before {
+    content: "|";
+    color: rgb(94, 85, 79);
+    margin-right: 8px;
+}
+.title-left::after {
+    content: "|";
+    color: rgb(94, 85, 79);
+    margin-left: 8px;
+}
+
+.sub-content {
+    border: 2px solid rgb(94, 85, 79);
+    padding: 10px;
+}
+
 body {
     background: rgb(22, 22, 22);
     color: rgb(217, 217, 217);
@@ -219,4 +247,30 @@ input[type="file"] {
     font-family: sans-serif;
     font-size: 12pt;
     transform: scale(0.75);
+}
+
+footer {
+    border: 2px solid rgb(217, 217, 217);
+    margin-top: 15px;
+    padding: 10px;
+}
+
+footer button {
+    /*color: rgb(115, 132, 94);*/
+    color: rgb(242, 194, 114)
+}
+
+footer button:hover {
+    color: rgb(217, 217, 217);
+}
+
+footer button::before {
+    content: "[";
+    color: rgb(94, 85, 79);
+    margin-right: 8px;
+}
+footer button::after {
+    content: "]";
+    color: rgb(94, 85, 79);
+    margin-left: 8px;
 }

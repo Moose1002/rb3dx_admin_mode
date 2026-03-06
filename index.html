@@ -22,16 +22,16 @@
         <button onclick="navigate('#general')">General</button>
         <button onclick="navigate('#audio')">Audio</button>
         <button onclick="navigate('#misc')">Misc</button>
-        <span class="title">RB3DX Admin Panel</span>
+        <span class="title" style="transform: translate(-50%, -23px);">RB3DX Admin Panel</span>
         <label id="set-xbox-ip">Xbox IP:
             <input type="text" id="xbox-ip" minlength="7" maxlength="15" size="15" pattern="^(?>(\d|[1-9]\d{2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?1)$" title="Please enter a valid ipv4 address." required>
         </label>
     </nav>
     <main id="content">
         <h2 id="ip-warning" style="text-align: center; display: none;"><u>Please enter your Xbox360 console IP address in the top right.</u></h2>
-        <div id="general">
+        <div id="general" style="display: none">
             <span class="title-left" style="transform: translateY(-20px); text-align: center">General</span>
-            <select name="song_list" id="song_list"></select>
+            <select name="song_list" id="song_list" style="display: none"></select>
             <div id="song-list-buttons">
                 <button id="jumpSongBtn" onclick="jumpSong()" style="display: none;">Jump to Song</button>
                 <button onclick="logSong()">Select Song</button>
@@ -48,7 +48,7 @@
             </div>
         </div>
         <div id="misc" style="display: none;">
-            <span class="title-left" style="transform: translateY(-20px); text-align: center">Misc</span>
+            <span class="title-left" style="transform: translateY(-30px); text-align: center">Misc</span>
             <div style="margin-bottom: 10px;">
                 <h3 id="song-count" style="margin: 0px; margin-bottom: 10px;"></h3>
                 <button style="display: inline-block;" id="pullSongs" onclick="fetchSongList()">Pull Songs</button>

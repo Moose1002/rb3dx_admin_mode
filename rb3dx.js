@@ -17,6 +17,7 @@ $(document).ready(function() {
             xboxIP = (document.getElementById("xbox-ip").value);
             alert("Xbox IP Set");
             $("#ace_uploaded").css("display", "block");
+            $("#general").css("display", "block");
             $("#ip-warning").css("display", "none")
             fetchSongList()
         }

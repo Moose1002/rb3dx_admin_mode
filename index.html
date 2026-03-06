@@ -34,21 +34,21 @@
             <select name="song_list" id="song_list"></select>
             <div id="song-list-buttons">
                 <button id="jumpSongBtn" onclick="jumpSong()" style="display: none;">Jump to Song</button>
-                <button onclick="logSong()">Play Song</button>
+                <button onclick="logSong()">Select Song</button>
                 <button onclick="sendCommand('{ui goto_screen song_select_enter_screen}')">Song Library</button>
                 <button id="pause" onclick="pauseSong()">Play/Pause</button>
             </div>
         </div>
         <div id="select-ace" style="display: none;">
             <p>Select ace_admin.dta</p>
-            <input type="file" id="upload-ace">
+            <input type="file" class="file-upload" id="upload-ace">
         </div>
         <div id="ace_uploaded" style="display: none;">
             <div style="margin-bottom: 10px;">
                 <h3 id="song-count" style="margin: 0px; margin-bottom: 10px;"></h3>
                 <button style="display: inline-block;" id="pullSongs" onclick="fetchSongList()">Pull Songs</button>
                 <p style="display: inline-block;" id="uploadCSV"></p>
-                <input type="file" style="display: inline-block;" id="upload"></input>
+                <input type="file" class="file-upload" style="display: inline-block;" id="upload"></input>
             </div>
             <br>
             <div>

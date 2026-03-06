@@ -31,7 +31,7 @@ function setPlatform(console) {
         $("#jumpSongBtn").css("display", "inline-block");
         $("#set-xbox-ip").css("display", "block");
         $("#ip-warning").css("display", "block")
-        $("#uploadCSV").text("or Upload CSV");
+        $("#uploadCSV").text("or");
     }
     if (consoleMode == "rpcs3") {
         $("#select-ace").css("display", "block");
@@ -75,6 +75,12 @@ function logSong() {
     var shortname = (document.getElementById("song_list").value);
     sendCommand(
         `{meta_performer reset_songs} {meta_performer set_song {symbol ${shortname}}} {gamemode set_mode qp_coop} {ui abstract_wipe} {ui goto_screen {music_library get_next_screen}}`
+    )
+}
+
+function pauseSong() {
+    sendCommand(
+       `{beatmatch set_paused {! {beatmatch get_paused}}}`
     )
 }
 

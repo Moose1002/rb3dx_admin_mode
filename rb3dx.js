@@ -78,6 +78,12 @@ function logSong() {
     )
 }
 
+function pauseSong() {
+    sendCommand(
+       `{beatmatch set_paused {! {beatmatch get_paused}}}`
+    )
+}
+
 function showManualScript() {
     $("#manualScript").css("display", $("#manualScript").css("display") == "block" ? "none" : "block"  ); // hide or show text box depending on current status
 }

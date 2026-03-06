@@ -31,7 +31,7 @@ function setPlatform(console) {
         $("#jumpSongBtn").css("display", "inline-block");
         $("#set-xbox-ip").css("display", "block");
         $("#ip-warning").css("display", "block")
-        $("#uploadCSV").text("or Upload CSV");
+        $("#uploadCSV").text("or");
     }
     if (consoleMode == "rpcs3") {
         $("#select-ace").css("display", "block");

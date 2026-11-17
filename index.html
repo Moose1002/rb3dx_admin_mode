@@ -55,6 +55,16 @@
                 <p style="display: inline-block;" id="uploadCSV"></p>
                 <input type="file" class="file-upload" style="display: inline-block;" id="upload"></input>
             </div>
+            <div>
+                <h3> Send Message: </h3>
+                <input type="text" id="message" name="message" placeholder="Type your message here...">
+                <button onclick="createMessageBox()">Send</button>
+            </div>
+            <div>
+                <h3>Modifier Manager</h3>
+                <input type="checkbox" onclick="toggleMod('mod_auto_kick delayed_effect')">Auto Kick</input>
+                <input type="checkbox" onclick="toggleMod('mod_fakejuke')">Jukebox Mode</input>
+            </div>
         </div>
         <div id="select-ace" style="display: none;">
             <p>Select ace_admin.dta</p>

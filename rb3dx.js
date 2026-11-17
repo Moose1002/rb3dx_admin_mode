@@ -15,7 +15,7 @@ $(document).ready(function() {
         if (e.key === 'Enter' && !e.shiftKey) {  // Check if Enter is pressed (without Shift)
             e.preventDefault(); // Prevent new line if needed
             xboxIP = (document.getElementById("xbox-ip").value);
-            alert("Xbox IP Set");
+            //alert("Xbox IP Set");
             $("#ace_uploaded").css("display", "block");
             $("#general").css("display", "block");
             $("#ip-warning").css("display", "none")
@@ -91,6 +91,22 @@ function pauseSong() {
     sendCommand(
        `{beatmatch set_paused {! {beatmatch get_paused}}}`
     )
+}
+
+function createMessageBox() {
+    var message = document.getElementById("message").value;
+    const isEnglishLetters = (str) => /^[a-zA-Z0-9 .!?]+$/.test(str);
+    if (isEnglishLetters(message)) {
+        sendCommand(
+            `{dx_passive_messenger '${message}'}`
+        )
+    } else {
+        console.log("Could not send message: " + message + " due to non alphanumeric characters.");
+    }
+}
+
+function toggleMod(modName) {
+    sendCommand(`{modifier_mgr toggle_modifier_enabled ${modName}} {overshell update_all}`);
 }
 
 function showManualScript() {
